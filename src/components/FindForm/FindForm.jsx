@@ -1,10 +1,11 @@
 import { FindForm } from "./FindFormStyled";
 import { BiSearchAlt } from "react-icons/bi";
-import { getCityInfo } from "../../service/cityAPI";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const SearchForm = () => {
+export const SearchForm = ({setCitys}) => {
   const [cityName, setSityName] = useState("");
+  const navigate = useNavigate();
 
   const onChaige = (event) => {
     const target = event.target;
@@ -13,11 +14,7 @@ export const SearchForm = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    try {
-      await getCityInfo(cityName);
-    } catch (err) {
-      console.log(err);
-    }
+    navigate(`/list/${cityName}`)
   };
   return (
     <FindForm onSubmit={onSubmit}>

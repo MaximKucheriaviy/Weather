@@ -13,11 +13,12 @@ export const getCityInfo = async (name) => {
         params: {
           namePrefix: name,
           types: "CITY",
+          limit: 10
         },
         headers,
       }
     );
-    console.log(result.data);
+    return result.data;
   } catch (err) {
     console.log(err);
   }
