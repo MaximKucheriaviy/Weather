@@ -25,7 +25,7 @@ class WeatherAPI {
           q: query,
         },
       });
-      console.log(result);
+      return result;
     } catch (err) {
       console.log(err);
     }

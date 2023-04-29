@@ -1,11 +1,29 @@
-import { useSearchParams } from "react-router-dom"
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { weatherAPI } from "../service/weatherAPI";
+import { useEffect, useState } from "react";
 export const WeatherPage = () => {
-    const [params] = useSearchParams();
-    const p = params.get("lat")
+  const [params] = useSearchParams();
+  const lat = params.get("lat");
+  const long = params.get("long");
+  const [weatherInfo, setWeatherInfo] = useState(undefined);
 
-    console.log(p);
-    return <main>
-        <h2>weather</h2>
+  useEffect(() => {
+    async function getweather() {
+      const { data } = await weatherAPI.getCurrentWeather(lat + "," + long);
+      setWeatherInfo(data);
+      console.log(data);
+    }
+    getweather();
+  }, [lat, long]);
+
+  return (
+    <main>
+      {weatherInfo && (
+        <div>
+          <h2>{weatherInfo.location.name}</h2>
+          <img src={weatherInfo.current.condition.icon} alt="" />
+        </div>
+      )}
     </main>
-}
+  );
+};
